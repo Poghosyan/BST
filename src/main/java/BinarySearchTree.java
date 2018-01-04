@@ -114,24 +114,63 @@ public class BinarySearchTree<E extends Comparable<E>> {
 	 * IMPLEMENT THE METHODS BELOW!
 	 *
 	 *********************************************/
-	
-	
-	// Method #1.
-	public Node findNode(E val) {
 
-		/* IMPLEMENT THIS METHOD! */
-		
-		return null; // this line is here only so this code will compile if you don't modify it
+
+	/**
+	 * Given a value that is stored in the BST, it returns the corresponding Node that holds it. If the value does not
+	 * exist in this BST, this method should return null.
+	 * @param val
+	 * @return
+	 */
+	public Node findNode(E val) {
+        int compareResult;
+        Node current = root;
+	    if (root != null && val != null && this.contains(val)){
+	        Node result = null;
+	        while (result == null) {
+                compareResult = val.compareTo(current.value);
+                if (compareResult < 0) {
+                    current = current.leftChild;
+                } else if (compareResult > 0) {
+                    current = current.rightChild;
+                } else {
+                    result = current;
+                }
+            }
+            return result;
+        }
+		return null;
 
 	}
-	
-	// Method #2.
+
+    /**
+     * Given a value, this method should return the “depth” of its Node, which is the number of ancestors between that
+     * node and the root, including the root but not the node itself. The depth of the root is defined to be 0; the
+     * depth of its two children (if any) is defined to be 1; the depth of the root’s grandchildren (if any) is defined
+     * to be 2; and so on. If the value is null or does not exist in this BST, this method should return -1.
+     * @param val
+     * @return
+     */
 	protected int depth(E val) {
-
-		/* IMPLEMENT THIS METHOD! */
-		
-		return -2; // this line is here only so this code will compile if you don't modify it
-
+        if (root != null && val != null && this.contains(val)) {
+            Node current = root;
+            int compareResult;
+            int depth = 0;
+            while (true) {
+                compareResult = val.compareTo(current.value);
+                if (compareResult < 0) {
+                    current = current.leftChild;
+                    depth++;
+                } else if (compareResult > 0) {
+                    current = current.rightChild;
+                    depth++;
+                } else {
+                    break;
+                }
+            }
+            return depth;
+        }
+        return -1;
 	}
 	
 	// Method #3.
