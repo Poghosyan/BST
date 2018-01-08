@@ -207,22 +207,55 @@ public class BinarySearchTree<E extends Comparable<E>> {
     }
 
 
-    // Method #4.
+    /**
+     * Given a Node, return true if the absolute value of the difference in heights of its left and right children is
+     * 0 or 1, and return false otherwise. If the Node is null or does not exist in this BST, this method should return
+     * false.
+     *
+     * @param n
+     * @return
+     */
     protected boolean isBalanced(Node n) {
-
-        /* IMPLEMENT THIS METHOD! */
-
-        return true; // this line is here only so this code will compile if you don't modify it
-
+        int absoluteVal = 0;
+        if (n != null) {
+            Node node = findNode(n.value);
+            if (node != null) {
+                if (height(node.value) != 0) {
+                    int leftHeight = -1, rightHeight = -1;
+                    if (node.leftChild != null)
+                        leftHeight = height(node.leftChild.value);
+                    if (node.rightChild != null)
+                        rightHeight = height(node.rightChild.value);
+                    absoluteVal = Math.abs(leftHeight - rightHeight);
+                }
+                return absoluteVal == 1 || absoluteVal == 0;
+            }
+        }
+        return false;
     }
 
-    // Method #5. .
+    /**
+     * Returns true if isBalanced(Node) returns true for all Nodes in the tree
+     * @return
+     */
     public boolean isBalanced() {
-
-        /* IMPLEMENT THIS METHOD! */
-
-        return false; // this line is here only so this code will compile if you don't modify it
-
+        return isTreeBalanced(root);
     }
 
+    private boolean isTreeBalanced(Node n) {
+        if (root != null) {
+            boolean balanced = isBalanced(n);
+            if (balanced) {
+                if (n.leftChild != null) {
+                    balanced = isBalanced(n.leftChild);
+                }
+
+                if (balanced && n.rightChild != null) {
+                    balanced = isBalanced(n.rightChild);
+                }
+            }
+            return balanced;
+        }
+        return true;
+    }
 }
