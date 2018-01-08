@@ -186,8 +186,24 @@ public class BinarySearchTree<E extends Comparable<E>> {
     protected int height(E val) {
         if (root != null && val != null && this.contains(val)) {
             Node start = findNode(val);
+            return getHeight(start, 0);
         }
         return -1;
+    }
+
+    private int getHeight(Node n, int height) {
+        int leftHeight = 0, rightHeight = 0;
+        if (n.leftChild == null && n.rightChild == null) {
+            return height;
+        }
+        if (n.leftChild != null) {
+            leftHeight = getHeight(n.leftChild, height + 1);
+        }
+        if (n.rightChild != null) {
+            rightHeight = getHeight(n.rightChild, height + 1);
+        }
+
+        return leftHeight < rightHeight ? rightHeight : leftHeight;
     }
 
 
